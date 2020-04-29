@@ -1,15 +1,5 @@
 import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom"
+//import ReactDOM from 'react-dom'
 
 import Menu from './components/Menu'
 
@@ -41,17 +31,17 @@ const App = () => {
       id: '2'
     }
   ])
-  const [notification, setNotification] = useState('')
-  const [anecdote, setAnecdote] = useState({})
+ // const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
   }
 
+   /*
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
-
+ 
   const vote = (id) => {
     const anecdote = anecdoteById(id)
 
@@ -62,12 +52,13 @@ const App = () => {
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
+  */
 
   
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Menu  anecdotes={ anecdotes } anecdote={anecdote} addNew={ addNew }/>
+      <Menu  anecdotes={ anecdotes } addNew={ addNew }/>
       <Footer />
     </div>
   )

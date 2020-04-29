@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react'
+//import ReactDOM from 'react-dom'
 
 
 import {
   Switch,
   Route,
   Link,
-  Redirect,
+//  Redirect,
   useRouteMatch,
-  useHistory,
+//  useHistory,
 } from "react-router-dom"
 
 import AnecdoteList from './AnecdoteList'
