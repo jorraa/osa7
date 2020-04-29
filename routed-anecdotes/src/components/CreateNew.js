@@ -2,10 +2,6 @@ import React from 'react'
 import  { useField } from '../hooks/index'
 
 const CreateNew = (props) => {
-  //const [content, setContent] = useState('')
-  //const [author, setAuthor] = useState('')
-  //const [info, setInfo] = useState('')
-
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -20,6 +16,13 @@ const CreateNew = (props) => {
   const content = useField('text')
   const author = useField('text')
   const info = useField('text')
+
+  const reset = (event) =>{
+    event.preventDefault()
+    content.reset()
+    author.reset()
+    info.reset()
+  }
 
   return (
     <div>
@@ -38,9 +41,10 @@ const CreateNew = (props) => {
           <input {...info} />
         </div>
         <button>create</button>
+        <button type='button' onClick={reset}>reset</button>
       </form>
       <div>
-        {content.value} {author.value} {info.value}
+        {content.value} {author.value} {info.value} 
       </div>
     </div>
   )
