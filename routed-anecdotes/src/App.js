@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 //import ReactDOM from 'react-dom'
-import Redirect from 'react-router-dom'
 import Menu from './components/Menu'
 
 const Footer = () => (
@@ -41,7 +40,7 @@ const App = () => {
   }
 
    /* PIDÄ NÄMÄ
-  const anecdoteById = (id) =>
+  const anecdoteById = (id) =>  
     anecdotes.find(a => a.id === id)
  
   const vote = (id) => {
