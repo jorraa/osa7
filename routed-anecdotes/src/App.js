@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 //import ReactDOM from 'react-dom'
-
+import Redirect from 'react-router-dom'
 import Menu from './components/Menu'
-
-
-
 
 const Footer = () => (
   <div>
@@ -31,14 +28,19 @@ const App = () => {
       id: '2'
     }
   ])
- // const [notification, setNotification] = useState('')
+  const [notification, setNotification] = useState(null)
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`a new anecdote: ${anecdote.content}`)
+    setTimeout(() => {
+      setNotification(null)
+    }, 10000)
+    document.getElementById('anecdotes').click()
   }
 
-   /*
+   /* PIDÄ NÄMÄ
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
  
@@ -58,7 +60,11 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Menu  anecdotes={ anecdotes } addNew={ addNew }/>
+      <Menu  
+        anecdotes={ anecdotes } 
+        addNew={ addNew }
+        notification={ notification }
+      />
       <Footer />
     </div>
   )

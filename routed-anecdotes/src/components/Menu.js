@@ -15,29 +15,26 @@ import AnecdoteList from './AnecdoteList'
 import Anecdote from './Anecdote'
 import CreateNew from './CreateNew'
 import About from './About'
+import Notification from './Notification'
 
-const Menu = ({ anecdotes, addNew }) => {
+const Menu = ({ anecdotes, addNew, notification }) => {
   const padding = {
     paddingRight: 5
   }
   const match = useRouteMatch('/anecdotes/:id')
-  console.log('match', match)
   const anecdote = match ? anecdotes.find(a => {
-    console.log('a.id', a.id)      
-    console.log('params.id', match.params.id)
         return Number(a.id) === Number(match.params.id)
       })
       : null
-
       
   return (
     <div>
       <div>
-        <Link style={padding} to='/'>anecdotes</Link>
+        <Link id='anecdotes' style={padding} to='/'>anecdotes</Link>
         <Link style={padding} to='/create'>create new</Link>
         <Link style={padding} to='/about'>about</Link>
       </div>
-
+      <Notification notification={ notification } />
       <Switch>
       <Route path="/anecdotes/:id">
           <Anecdote anecdote={ anecdote } />
