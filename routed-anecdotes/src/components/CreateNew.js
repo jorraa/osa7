@@ -19,9 +19,9 @@ const CreateNew = (props) => {
 
   const reset = (event) =>{
     event.preventDefault()
-    content.reset()
-    author.reset()
-    info.reset()
+    content.onReset()
+    author.onReset()
+    info.oneset()
   }
 
   return (
