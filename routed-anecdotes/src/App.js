@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-//import ReactDOM from 'react-dom'
 import Menu from './components/Menu'
 
 const Footer = () => (
@@ -41,7 +40,7 @@ const App = () => {
     document.getElementById('anecdotes').click()
   }
 
-   /* PIDÄ NÄMÄ
+   /* unused, maybe task later
   const anecdoteById = (id) =>  
     anecdotes.find(a => a.id === id)
  
@@ -56,7 +55,6 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
   */
-
   
   return (
     <div>
