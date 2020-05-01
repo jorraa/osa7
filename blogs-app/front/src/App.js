@@ -9,11 +9,12 @@ import Button from './components/Button'
 import Footer from './components/Footer'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { useDispatch } from 'react-redux'
+import { setInfoMessage } from './reducers/notificationReducer'
+import { setErrorMessage } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [infoMessage, setInfoMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -22,7 +23,7 @@ const App = () => {
 
   const localStoreKey = 'loggedBlogappUser'
 
-
+  const dispatch = useDispatch()
 
   useEffect(() => {
     blogService
@@ -48,11 +49,7 @@ const App = () => {
       .createBlog(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
-
-        setInfoMessage(`a new blog ${returnedBlog.title} by ${user.name} added `)
-        setTimeout(() => {
-          setInfoMessage(null)
-        }, 3000)
+        dispatch(setInfoMessage(`a new blog ${returnedBlog.title} by ${user.name} added`, 10))
       })
   }
 
@@ -69,10 +66,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('wrong username or password')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 50000)
+      dispatch(setErrorMessage('wrong username or password', 10))
     }
   }
 
@@ -101,6 +95,7 @@ const App = () => {
     blog.likes++
     const returnedBlog = await blogService.updateBlog(blog)
 
+    dispatch(setInfoMessage(`you liked '${returnedBlog.title}'`, 10))
     setBlogs(blogs.map(blog =>
       blog.id !== blogId ? blog : returnedBlog))
   }
@@ -110,10 +105,7 @@ const App = () => {
 
     setBlogs(blogs.filter(b => b.id !== blog.id))
     // eslint-disable-next-line no-undef
-    setInfoMessage(`${blog.title} by ${blog.author} removed!`)
-    setTimeout(() => {
-      setInfoMessage(null)
-    }, 3000)
+    dispatch(setInfoMessage(`${blog.title} by ${blog.author} removed!`, 10))
   }
 
   const handleLogout = () => {
@@ -124,8 +116,7 @@ const App = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      <Notification message={errorMessage} className='error'/>
-      <Notification message={infoMessage} className='info'/>
+      <Notification/>
 
       {user === null ?
         loginForm() :
