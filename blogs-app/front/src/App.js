@@ -98,7 +98,7 @@ const App = () => {
     event.preventDefault()
     const blogId= event.target.id
     const blog = blogs.find(blog => blog.id === blogId)
-
+    blog.likes++
     const returnedBlog = await blogService.updateBlog(blog)
 
     setBlogs(blogs.map(blog =>
