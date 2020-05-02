@@ -2,7 +2,7 @@ export const addBlog = (blog) => {
   console.log('add bblogg', blog)
   return {
     type: 'ADD_BLOG',
-    data: { blog }
+    data: blog
   }
 }
 
@@ -35,7 +35,7 @@ const blogReducer = (state = [], action) => {
   case 'INIT_BLOGS':
     return action.data
   case 'ADD_BLOG':
-    return [...state, action.data.blog]
+    return [...state, action.data]
   case 'UPDATE_BLOG':
     return state.map(a =>
       a.id !== action.data.id ? a : action.data

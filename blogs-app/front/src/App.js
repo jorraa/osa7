@@ -15,12 +15,13 @@ import { initBlogs } from './reducers/blogReducer'
 import { addBlog } from './reducers/blogReducer'
 import { updateBlog } from './reducers/blogReducer'
 import { removeBlog } from './reducers/blogReducer'
+import { setUser } from './reducers/userReducer'
 
 const App = () => {
   // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  //const [user, setUser] = useState(null)
 
   const blogFormRef = React.createRef()
 
@@ -43,11 +44,10 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem(localStoreKey)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
     }
   }, [])
-
   const blogs = state.blogs
 
   const createBlog = (blogObject) => {
@@ -57,7 +57,7 @@ const App = () => {
       .then(returnedBlog => {
         console.log('returnedBlog', returnedBlog)
         dispatch(addBlog(returnedBlog))
-        dispatch(setInfoMessage(`a new blog ${returnedBlog.title} by ${user.name} added`, 10))
+        dispatch(setInfoMessage(`a new blog ${returnedBlog.title} by ${state.user.name} added`, 10))
       })
   }
 
@@ -70,7 +70,7 @@ const App = () => {
       window.localStorage.setItem(localStoreKey, JSON.stringify(user))
 
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(setUser(user))
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -116,18 +116,17 @@ const App = () => {
 
   const handleLogout = () => {
     localStorage.removeItem(localStoreKey)
-    setUser(null)
+    dispatch(setUser(null))
   }
-
   return (
     <div>
       <h1>Blogs</h1>
       <Notification/>
 
-      {user === null ?
+      {state.user === null ?
         loginForm() :
         <div>
-          <p>{user.name} logged in
+          <p>{state.user.name} logged in
             <Button handleClick={handleLogout} text='logout' />
           </p>
           {blogForm()}
@@ -135,7 +134,7 @@ const App = () => {
             <>
               <TogglableBlog blog={blog}
                 onLikesClick={handleLikes}
-                username={user.username}
+                username={state.user.username}
                 onRemove={handleRemoveBlog}
               />
             </>
