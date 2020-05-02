@@ -9,12 +9,10 @@ const createNotification = (message, className) => {
   }
 }
 
-const clearNotification = (message) => {
+const clearNotification = () => {
   return {
     type: 'CLEAR_NOTIFICATION',
-    data: {
-      message: message,
-    }
+    data: {}
   }
 }
 

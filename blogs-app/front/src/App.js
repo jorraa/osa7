@@ -4,17 +4,20 @@ import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import TogglableBlog from './components/TogglableBlog'
-//import Blog from './components/Blog'
 import Button from './components/Button'
 import Footer from './components/Footer'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setInfoMessage } from './reducers/notificationReducer'
 import { setErrorMessage } from './reducers/notificationReducer'
+import { initBlogs } from './reducers/blogReducer'
+import { addBlog } from './reducers/blogReducer'
+import { updateBlog } from './reducers/blogReducer'
+import { removeBlog } from './reducers/blogReducer'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -25,17 +28,19 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const state = useSelector(state => state)
+
+  useEffect( () => {
     blogService
       .getAll()
-      .then(initialNotes => {
-        setBlogs(initialNotes)
+      .then(initialBlogs => {
+        dispatch(initBlogs(initialBlogs))
       })
+      // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem(localStoreKey)
-    console.log('loggedUserJSON', loggedUserJSON)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -43,12 +48,15 @@ const App = () => {
     }
   }, [])
 
+  const blogs = state.blogs
+
   const createBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
       .createBlog(blogObject)
       .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
+        console.log('returnedBlog', returnedBlog)
+        dispatch(addBlog(returnedBlog))
         dispatch(setInfoMessage(`a new blog ${returnedBlog.title} by ${user.name} added`, 10))
       })
   }
@@ -96,15 +104,13 @@ const App = () => {
     const returnedBlog = await blogService.updateBlog(blog)
 
     dispatch(setInfoMessage(`you liked '${returnedBlog.title}'`, 10))
-    setBlogs(blogs.map(blog =>
-      blog.id !== blogId ? blog : returnedBlog))
+    dispatch(updateBlog(returnedBlog))
   }
 
   const handleRemoveBlog = async (blog) => {
     await blogService.removeBlog(blog)
 
-    setBlogs(blogs.filter(b => b.id !== blog.id))
-    // eslint-disable-next-line no-undef
+    dispatch(removeBlog(blog.id))
     dispatch(setInfoMessage(`${blog.title} by ${blog.author} removed!`, 10))
   }
 
@@ -130,7 +136,8 @@ const App = () => {
               <TogglableBlog blog={blog}
                 onLikesClick={handleLikes}
                 username={user.username}
-                onRemove={handleRemoveBlog}/>
+                onRemove={handleRemoveBlog}
+              />
             </>
           )}
         </div>
