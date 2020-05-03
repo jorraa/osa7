@@ -16,3 +16,7 @@ export const Footer = styled.div`
   margin-top: 1em;
   text-align: center
 `
+export const PapayaTable = styled.table`
+  background: papayawhip;
+  padding: 1em;
+`

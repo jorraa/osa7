@@ -1,17 +1,17 @@
-export const setUsers = (users) => {
-  console.log('add users', users)
+export const initUsers = (users) => {
+  console.log('init users', users)
   return {
-    type: 'SET_USER',
+    type: 'INIT_USERS',
     data: users
   }
 }
 
 
-const usersReducer = (state = {}, action) => {
-  console.log('state now: ', state)
+const usersReducer = (state = [], action) => {
+  console.log('UsersReducer state now: ', state)
   console.log('action', action)
   switch(action.type) {
-  case 'SET_USERS':
+  case 'INIT_USERS':
     return action.data
   default:
     return state

@@ -3,14 +3,17 @@ import React, { useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import Notification from './components/utils/Notification'
 import Blogs from './components/blogs/Blogs'
+import Users from './components/users/Users'
 import Button from './components/utils/Button'
 //import Footer from './components/Footer'
 import blogService from './services/blogs'
+import userService from './services/users'
 
 import { useDispatch, useSelector } from 'react-redux'
 
 import { initBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
+import { initUsers } from './reducers/usersReducer'
 
 import { Page } from './styled/StyledComponents'
 import { Navigation } from './styled/StyledComponents'
@@ -29,7 +32,18 @@ const App = () => {
       .then(initialBlogs => {
         dispatch(initBlogs(initialBlogs))
       })
-      // eslint-disable-next-line
+  // eslint-disable-next-line
+  }, []) 
+
+  useEffect( () => {
+    userService
+      .getAll()
+      .then(initialUsers => {
+        console.log('initialUsers', initialUsers)
+        dispatch(initUsers(initialUsers))
+      })
+
+  // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -47,7 +61,6 @@ const App = () => {
     dispatch(setUser(null))
   }
 
-  console.log('state.user', state.user)
   return (
     <Page>
       <Navigation>
@@ -61,6 +74,7 @@ const App = () => {
             <Button handleClick={handleLogout} text='logout' />
           </p>
           <Blogs/>
+          <Users/>
         </div>
       }
       <Footer>
