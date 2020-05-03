@@ -38,7 +38,7 @@ const TogglableBlog = React.forwardRef((props, ref) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} key={blog.id}>
       <div style={hideWhenVisible} className="defaultContent">
         {blog.title} {blog.author}
         <button onClick={toggleVisibility}> view </button>
