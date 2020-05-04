@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { PapayaTable } from '../../styled/StyledComponents'
 const Users = () => {
   const state = useSelector(state => state)
@@ -8,10 +9,11 @@ const Users = () => {
   return <div>
     <h1>Users</h1>
     <PapayaTable>
-      <tr><th></th><th>Blogs created</th></tr>
-      {users.sort((a, b) => (a.usersname < b.username) ? -1 : 1).map(user =>
+      <tr><th>User</th><th>Blogs created</th></tr>
+      {users.sort((a, b) => (a.username < b.username) ? -1 : 1).map(user =>
         <tr key={user.id}>
-          <td>{ user.name }</td><td>{user.blogs.length}</td>
+          <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
+          <td>{user.blogs.length}</td>
         </tr>
       )}
     </PapayaTable>

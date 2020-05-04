@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
-
+import {
+  Switch, Route, Link, Redirect, useRouteMatch
+} from 'react-router-dom'
 import LoginForm from './components/LoginForm'
+import Logout from './components/Logout'
 import Notification from './components/utils/Notification'
 import Blogs from './components/blogs/Blogs'
 import Users from './components/users/Users'
-import Button from './components/utils/Button'
-//import Footer from './components/Footer'
+import User from './components/users/User'
+import Blog from './components/blogs/Blog'
 import blogService from './services/blogs'
 import userService from './services/users'
 
@@ -56,27 +59,62 @@ const App = () => {
     // eslint-disable-next-line
   }, [])
 
-  const handleLogout = () => {
-    localStorage.removeItem(localStoreKey)
-    dispatch(setUser(null))
+  const user = state.user
+  const users = state.users
+  const blogs = state.blogs
+  const padding = {
+    padding: 5
   }
+  const matchBlog = useRouteMatch('/blogs/:id')
+  const blog = matchBlog
+    ? blogs.find(blog => blog.id === matchBlog.params.id)
+    : null
 
+  const matchUser = useRouteMatch('/users/:id')
+  console.log('matchUser', matchUser)
+  const oneUser = matchUser
+    ? users.find(user => {
+      console.log(user.id,'match', matchUser.params.id)
+      return user.id === matchUser.params.id
+    })
+    : null
   return (
     <Page>
       <Navigation>
-        aaa
-      </Navigation>
-      <Notification/>
-      {!state.user.username ?
-        <LoginForm localStoreKey={localStoreKey}/>:
         <div>
-          <p>{state.user.name} logged in
-            <Button handleClick={handleLogout} text='logout' />
-          </p>
-          <Blogs/>
-          <Users/>
+          <Link style={padding} to="/">home</Link>
+          <Link style={padding} to="/blogs">blogs</Link>
+          <Link style={padding} to="/users">users</Link>
+          {user.username
+            ? <span><em>{user.username} logged in</em>
+              <Logout localStoreKey={localStoreKey}/>
+              <Redirect to="/" /></span>
+            : <Redirect to="/login" />
+          }
         </div>
-      }
+        <Notification/>
+        <Switch>
+          <Route path="/blogs/:id">
+            <Blog blog={blog} />
+          </Route>
+          <Route path="/blogs">
+            <Blogs blogs={blogs} />
+          </Route>
+          <Route path="/users/:id">
+            <User user={oneUser} />
+          </Route>
+          <Route path="/users">
+            {user.username ? <Users /> : <Redirect to="/login" />}
+          </Route>
+          <Route path="/login">
+            <LoginForm localStoreKey={localStoreKey} />
+          </Route>
+          <Route path="/">
+            <div></div>
+          </Route>
+        </Switch>
+      </Navigation>
+
       <Footer>
         <br />
         <em>Blogs app by JR, task for Fullstackopen in University of Helsinki 2020</em>

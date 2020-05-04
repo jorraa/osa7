@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { useDispatch } from 'react-redux'
-import Togglable from './utils/Togglable'
+//import Togglable from './utils/Togglable'
 
 import blogService from '../services/blogs'
 import loginService from '../services/login'
@@ -37,27 +37,25 @@ const LoginForm = ({
 
   return (
     <>
-      <Togglable buttonLabel='login'>
-        <h2>Login</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input id='username'
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input id='password'
-              type="password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button id='login-button' type="submit">login</button>
-        </form>
-      </Togglable>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <div>
+          username
+          <input id='username'
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          password
+          <input id='password'
+            type="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button id='login-button' type="submit">login</button>
+      </form>
     </>
   )
 }

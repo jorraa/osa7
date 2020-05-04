@@ -1,15 +1,17 @@
 import React from 'react'
-import Button from './Button'
+import { useDispatch } from 'react-redux'
 
-const Logout = ({ username, handleLogoutClick, text }) => {
-  console.log('Logout username', username)
-  if(username){
-    return (
-      <p>{username } logged in
-        <Button onclick={handleLogoutClick} text={text} />
-      </p>
-    )
-  } else return '<p>No user</p>'
+import { setUser } from '../reducers/userReducer'
+
+const Logout = ({ localStoreKey }) => {
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    console.log('logout PRESSED, key', localStoreKey)
+    localStorage.removeItem(localStoreKey)
+    dispatch(setUser(null))
+  }
+  return <button onClick={handleLogout}>Logout</button>
 }
 
 export default Logout
