@@ -1,7 +1,6 @@
 import React from 'react'
 
 const User = ({ user }) => {
-  console.log('userInUSER', user)
   if(!user) {return null}
   return <div>
     <h1>{user.name}</h1>

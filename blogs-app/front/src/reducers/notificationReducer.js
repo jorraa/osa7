@@ -1,5 +1,4 @@
 const createNotification = (message, className) => {
-  console.log('createNotification, msg', message)
   return {
     type: 'NEW_NOTIFICATION',
     data: {
@@ -17,8 +16,6 @@ const clearNotification = () => {
 }
 
 const notificationReducer = (state = '{}', action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
   switch(action.type) {
   case 'NEW_NOTIFICATION':
     return [action.data]

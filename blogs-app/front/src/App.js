@@ -42,7 +42,6 @@ const App = () => {
     userService
       .getAll()
       .then(initialUsers => {
-        console.log('initialUsers', initialUsers)
         dispatch(initUsers(initialUsers))
       })
 
@@ -71,10 +70,8 @@ const App = () => {
     : null
 
   const matchUser = useRouteMatch('/users/:id')
-  console.log('matchUser', matchUser)
   const oneUser = matchUser
     ? users.find(user => {
-      console.log(user.id,'match', matchUser.params.id)
       return user.id === matchUser.params.id
     })
     : null

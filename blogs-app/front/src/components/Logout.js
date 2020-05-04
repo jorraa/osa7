@@ -7,7 +7,6 @@ const Logout = ({ localStoreKey }) => {
   const dispatch = useDispatch()
 
   const handleLogout = () => {
-    console.log('logout PRESSED, key', localStoreKey)
     localStorage.removeItem(localStoreKey)
     dispatch(setUser(null))
   }

@@ -1,5 +1,4 @@
 export const addBlog = (blog) => {
-  console.log('add bblogg', blog)
   return {
     type: 'ADD_BLOG',
     data: blog
@@ -7,7 +6,6 @@ export const addBlog = (blog) => {
 }
 
 export const updateBlog = (blog) => {
-  console.log('update blogg', blog)
   return {
     type: 'UPDATE_BLOG',
     data: blog

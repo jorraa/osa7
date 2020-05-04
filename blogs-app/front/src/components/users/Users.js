@@ -9,13 +9,17 @@ const Users = () => {
   return <div>
     <h1>Users</h1>
     <PapayaTable>
-      <tr><th>User</th><th>Blogs created</th></tr>
-      {users.sort((a, b) => (a.username < b.username) ? -1 : 1).map(user =>
-        <tr key={user.id}>
-          <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
-          <td>{user.blogs.length}</td>
-        </tr>
-      )}
+      <thead>
+        <tr><th>User</th><th>Blogs created</th></tr>
+      </thead>
+      <tbody>
+        {users.sort((a, b) => (a.username < b.username) ? -1 : 1).map(user =>
+          <tr key={user.id}>
+            <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
+            <td>{user.blogs.length}</td>
+          </tr>
+        )}
+      </tbody>
     </PapayaTable>
   </div>
 }

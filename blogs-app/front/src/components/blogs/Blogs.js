@@ -1,17 +1,13 @@
 import React from 'react'
-
 import { useDispatch, useSelector } from 'react-redux'
-
+import { Link } from 'react-router-dom'
 import BlogForm from './BlogForm'
-import TogglableBlog from './TogglableBlog'
 import Togglable from '../utils/Togglable'
 
 import blogService from '../../services/blogs'
 
 import { setInfoMessage } from '../../reducers/notificationReducer'
 import { addBlog } from '../../reducers/blogReducer'
-import { updateBlog } from '../../reducers/blogReducer'
-import { removeBlog } from '../../reducers/blogReducer'
 
 const Blogs = () => {
 
@@ -37,36 +33,13 @@ const Blogs = () => {
     </Togglable>
   )
 
-
-  const handleLikes = async (event) => {
-    event.preventDefault()
-    const blogId= event.target.id
-    const blog = blogs.find(blog => blog.id === blogId)
-    blog.likes++
-    const returnedBlog = await blogService.updateBlog(blog)
-
-    dispatch(setInfoMessage(`you liked '${returnedBlog.title}'`, 10))
-    dispatch(updateBlog(returnedBlog))
-  }
-
-  const handleRemoveBlog = async (blog) => {
-    await blogService.removeBlog(blog)
-
-    dispatch(removeBlog(blog.id))
-    dispatch(setInfoMessage(`${blog.title} by ${blog.author} removed!`, 10))
-  }
-
   return (
     <div>
       <h1>Blogs</h1>
       {blogForm()}
       {blogs.sort((a, b) => (a.likes > b.likes) ? -1 : 1).map(blog =>
         <div key={blog.id}>
-          <TogglableBlog blog={blog}
-            onLikesClick={handleLikes}
-            username={state.user.username}
-            onRemove={handleRemoveBlog}
-          />
+          <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
         </div>
       )}
     </div>

@@ -13,7 +13,6 @@ const getAll = async () => {
 }
 
 const createBlog = async newBlog => {
-  console.log('createBlog, blog', newBlog)
   const config = {
     headers: { Authorization: token },
   }
