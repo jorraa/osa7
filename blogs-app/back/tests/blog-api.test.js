@@ -159,7 +159,7 @@ describe('viewing a specific blog', () => {
     const blogsAtStart = await helper.blogsInDb()
 
     const blogToView = blogsAtStart[0]
-    console.log('blogToView', blogToView)
+
     const resultBlog = await api
       .get(`/api/blogs/${blogToView.id}`)
       .expect(200)
@@ -249,6 +249,31 @@ describe('updating a blog', () => {
 
     const likes = response.body.likes
     expect(likes).toBe(newLikes)
+  })
+
+  test('updating comments of a blog', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const response = await api
+      .post(`/api/blogs/${blogToUpdate.id}/comments`)
+      .send({ comment:'Yes, hieno blogi' })
+      .expect(200)
+
+    const comments = response.body.comments
+
+    expect(comments.length).toBe(1)
+    expect(comments[0]).toBe('Yes, hieno blogi')
+
+    const response2 = await api
+      .post(`/api/blogs/${blogToUpdate.id}/comments`)
+      .send({ comment:'Vau mikä juttu' })
+      .expect(200)
+
+    const comments2 = response2.body.comments
+
+    expect(comments2.length).toBe(2)
+    expect(comments2[1]).toBe('Vau mikä juttu')
   })
 })
 

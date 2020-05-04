@@ -23,6 +23,17 @@ blogsRouter.get('/:id', async (request, response) => {
   }
 })
 
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const comment = request.body.comment
+  const blog = await Blog.findById(request.params.id)
+
+  blog.comments.push(comment)
+
+  const savedBlog = await blog.save()
+
+  response.json(savedBlog.toJSON())
+})
+
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
   const blog = new Blog(body)
