@@ -1,11 +1,12 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
+import { BasicBtn } from '../../styled/StyledComponents'
 
 const Button = ({ handleClick, text }) => (
-  <button onClick={handleClick}>
+  <BasicBtn onClick={handleClick}>
     {text}
-  </button>
+  </BasicBtn>
 )
 
 Button.propTypes = {

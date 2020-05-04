@@ -75,6 +75,7 @@ const App = () => {
       return user.id === matchUser.params.id
     })
     : null
+
   return (
     <Page>
       <Navigation>
@@ -82,11 +83,11 @@ const App = () => {
           <Link style={padding} to="/">home</Link>
           <Link style={padding} to="/blogs">blogs</Link>
           <Link style={padding} to="/users">users</Link>
-          {user.username
-            ? <span><em>{user.username} logged in</em>
+          {user === null
+            ? <Redirect to="/login" />
+            : <span><em>{user.username} logged in</em>
               <Logout localStoreKey={localStoreKey}/>
               <Redirect to="/" /></span>
-            : <Redirect to="/login" />
           }
         </div>
         <Notification/>
@@ -101,7 +102,7 @@ const App = () => {
             <User user={oneUser} />
           </Route>
           <Route path="/users">
-            {user.username ? <Users /> : <Redirect to="/login" />}
+            {user !== null ? <Users /> : <Redirect to="/login" />}
           </Route>
           <Route path="/login">
             <LoginForm localStoreKey={localStoreKey} />

@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { BasicDiv } from '../../styled/StyledComponents'
 const User = ({ user }) => {
   if(!user) {return null}
-  return <div>
+  return <BasicDiv>
     <h1>{user.name}</h1>
     <h2>Added blogs</h2>
     <ol>
@@ -10,7 +11,7 @@ const User = ({ user }) => {
         <li key={blog.id}>{blog.title} Likes: {blog.likes}</li>
       )}
     </ol>
-  </div>
+  </BasicDiv>
 }
 
 export default User

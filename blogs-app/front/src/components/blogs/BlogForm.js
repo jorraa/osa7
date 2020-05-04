@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { BasicBtn } from '../../styled/StyledComponents'
 
 const BlogForm = ({ createBlog }) => {
   const [newTitle, setNewTitle] = useState('')
@@ -52,7 +53,7 @@ const BlogForm = ({ createBlog }) => {
             onChange={handleUrlChange}
           />
         </p>
-        <button type="submit">create</button>
+        <BasicBtn type="submit">create</BasicBtn>
       </form>
     </div>
   )

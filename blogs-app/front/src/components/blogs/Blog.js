@@ -6,6 +6,8 @@ import blogService from '../../services/blogs'
 import { updateBlog, removeBlog } from '../../reducers/blogReducer'
 import Togglable from '../utils/Togglable'
 
+import { BasicDiv, BasicSubDiv, BasicBtn } from '../../styled/StyledComponents'
+
 const Blog = ({ blog }) => {
   const [newComment, setNewComment] = useState('')
   const dispatch = useDispatch()
@@ -60,27 +62,27 @@ const Blog = ({ blog }) => {
             onChange={handleCommentChange}
           />
         </p>
-        <button type="submit">create</button>
+        <BasicBtn type="submit">create</BasicBtn>
       </form>
     </Togglable>
   )
-  return <div>
+  return <BasicDiv>
     <h1>{blog.title}</h1>
     <div>
       <a href='{blog.url}'>{blog.url}</a>
     </div>
     <div>
       likes: {blog.likes}
-      <button id={blog.id} onClick={handleLikes}>
+      <BasicBtn id={blog.id} onClick={handleLikes}>
           Like
-      </button><br></br>
+      </BasicBtn><br></br>
       Added by {blog.user.name}<br></br>
       {state.user.username === blog.user.username
-        ?<button id={blog.id} onClick={handleRemoveBlog}>remove</button>
+        ?<BasicBtn id={blog.id} onClick={handleRemoveBlog}>remove</BasicBtn>
         :null
       }
     </div>
-    <div>
+    <BasicSubDiv>
       <h2>Comments</h2>
       {commentForm()}
       <div>
@@ -90,8 +92,8 @@ const Blog = ({ blog }) => {
           )}
         </ul>
       </div>
-    </div>
-  </div>
+    </BasicSubDiv>
+  </BasicDiv>
 }
 
 export default Blog

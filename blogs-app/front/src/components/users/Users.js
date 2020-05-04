@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { PapayaTable } from '../../styled/StyledComponents'
+import { PapayaTable, BasicDiv } from '../../styled/StyledComponents'
 const Users = () => {
   const state = useSelector(state => state)
   const users = state.users
   if(!state.users) return <div></div>
-  return <div>
+  return <BasicDiv>
     <h1>Users</h1>
     <PapayaTable>
       <thead>
@@ -21,7 +21,7 @@ const Users = () => {
         )}
       </tbody>
     </PapayaTable>
-  </div>
+  </BasicDiv>
 }
 
 export default Users

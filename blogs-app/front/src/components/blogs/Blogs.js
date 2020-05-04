@@ -9,6 +9,8 @@ import blogService from '../../services/blogs'
 import { setInfoMessage } from '../../reducers/notificationReducer'
 import { addBlog } from '../../reducers/blogReducer'
 
+import { BasicDiv, BasicSubDiv } from '../../styled/StyledComponents'
+
 const Blogs = () => {
 
   const state = useSelector(state => state)
@@ -34,15 +36,17 @@ const Blogs = () => {
   )
 
   return (
-    <div>
+    <BasicDiv>
       <h1>Blogs</h1>
-      {blogForm()}
+      <BasicSubDiv>
+        {blogForm()}
+      </BasicSubDiv>
       {blogs.sort((a, b) => (a.likes > b.likes) ? -1 : 1).map(blog =>
         <div key={blog.id}>
           <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
         </div>
       )}
-    </div>
+    </BasicDiv>
   )
 }
 

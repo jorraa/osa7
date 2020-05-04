@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { useDispatch } from 'react-redux'
-//import Togglable from './utils/Togglable'
 
 import blogService from '../services/blogs'
 import loginService from '../services/login'
 
 import { setUser } from '../reducers/userReducer'
 import { setErrorMessage } from '../reducers/notificationReducer'
+
+import { BasicDiv, BasicBtn } from '../styled/StyledComponents'
 
 const LoginForm = ({
   localStoreKey
@@ -36,7 +37,7 @@ const LoginForm = ({
   }
 
   return (
-    <>
+    <BasicDiv>
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
@@ -54,9 +55,9 @@ const LoginForm = ({
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button id='login-button' type="submit">login</button>
+        <BasicBtn id='login-button' type="submit">login</BasicBtn>
       </form>
-    </>
+    </BasicDiv>
   )
 }
 
